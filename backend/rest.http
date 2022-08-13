@@ -1,0 +1,2 @@
+### post method
+POST http://localhost:8000/create-payment-intent

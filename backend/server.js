@@ -9,6 +9,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//routers
+import stripePaymentRouter from "./routers/stripePaymentRouter.js";
+app.use("/", stripePaymentRouter);
+
 app.listen(PORT, (error) => {
   error && console.log(error);
   console.log(`Server is running at http://localhost:${PORT}`);
