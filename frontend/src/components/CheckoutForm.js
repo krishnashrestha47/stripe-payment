@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 
+import Swal from "sweetalert2";
+
 const CheckoutForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -10,6 +12,24 @@ const CheckoutForm = () => {
   const elements = useElements();
 
   const price = 500;
+
+  const handleSuccess = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Your payment was successful",
+      timer: 4000,
+      allowOutsideClick: false,
+    });
+  };
+
+  const handleFail = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Your payment did not go through, please try again",
+      timer: 4000,
+      allowOutsideClick: false,
+    });
+  };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +59,14 @@ const CheckoutForm = () => {
           },
         },
       });
+
+      if (paymentIntent.status === "succeeded") {
+        handleSuccess();
+        setName("");
+        setEmail("");
+      }
     } catch (error) {
+      handleFail();
       console.log(error);
     }
   };
