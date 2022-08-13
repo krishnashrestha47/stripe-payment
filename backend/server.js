@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 const app = express();
@@ -11,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //routers
 import stripePaymentRouter from "./routers/stripePaymentRouter.js";
-app.use("/", stripePaymentRouter);
+app.use("/api/payment", stripePaymentRouter);
 
 app.listen(PORT, (error) => {
   error && console.log(error);
